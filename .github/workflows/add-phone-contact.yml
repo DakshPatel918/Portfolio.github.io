@@ -1,0 +1,33 @@
+name: Add phone to contact
+on:
+  push:
+    paths:
+      - '.github/workflows/add-phone-contact.yml'
+permissions:
+  contents: write
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Add phone number
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('index.html')
+          s=p.read_text()
+          old='''<a href="mailto:dakshpatel091805@gmail.com" class="btn btn-primary">Email me</a>\n        <a href="https://www.linkedin.com/in/dakshpatel918" class="btn btn-secondary" target="_blank" rel="noopener">LinkedIn →</a>'''
+          new='''<a href="mailto:dakshpatel091805@gmail.com" class="btn btn-primary">Email me</a>\n        <a href="tel:+12178065525" class="btn btn-secondary">217-806-5525</a>\n        <a href="https://www.linkedin.com/in/dakshpatel918" class="btn btn-secondary" target="_blank" rel="noopener">LinkedIn →</a>'''
+          if 'tel:+12178065525' not in s:
+              if old not in s:
+                  raise SystemExit('Contact block not found')
+              s=s.replace(old,new,1)
+              p.write_text(s)
+          PY
+      - name: Commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          git diff --cached --quiet || git commit -m "Add phone number to contact section"
+          git push
