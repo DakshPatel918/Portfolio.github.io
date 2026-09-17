@@ -32,14 +32,11 @@ jobs:
       <h3 style="font-size:1.45rem;margin:0 0 10px;">Recruiting Availability</h3>
       <p style="color:var(--text-dim);margin:0 0 24px;">Available for internship opportunities across investment banking, private equity, asset management, wealth management, credit, corporate finance, and related finance roles.</p>
       <div class="skills-list" style="margin-bottom:28px;">
-        <span>Fall 2026</span>
-        <span>Winter 2027</span>
-        <span>Summer 2027</span>
-        <span>Fall 2027</span>
-        <span>Winter 2028</span>
+        <span>Fall 2026</span><span>Winter 2027</span><span>Summer 2027</span><span>Fall 2027</span><span>Winter 2028</span>
       </div>
       <div class="hero-cta" style="justify-content:flex-start;flex-wrap:wrap;">
-        <a href="mailto:dakshpatel091805@gmail.com?subject=Finance%20Internship%20Opportunity" class="btn btn-primary">Contact me about an opportunity</a>
+        <a href="mailto:dakshpatel091805@gmail.com?subject=Finance%20Internship%20Opportunity" class="btn btn-primary">Email me</a>
+        <a href="tel:+12178065525" class="btn btn-secondary">Call: 217-806-5525</a>
         <a href="Daksh_Patel_Resume.pdf" class="btn btn-secondary" target="_blank">View résumé →</a>
       </div>
     </div>
@@ -49,6 +46,11 @@ jobs:
           if 'id="opportunities"' not in s:
               marker='<section class="section contact" id="contact">'
               s=s.replace(marker, section+'\n'+marker)
+          # Also expose phone in the main contact area.
+          linkedin='<a href="https://www.linkedin.com/in/dakshpatel918" class="btn btn-secondary" target="_blank" rel="noopener">LinkedIn →</a>'
+          phone='<a href="tel:+12178065525" class="btn btn-secondary">217-806-5525</a>\n        '
+          if 'tel:+12178065525' not in s:
+              s=s.replace(linkedin, phone+linkedin)
           p.write_text(s)
           PY
       - name: Commit homepage update
@@ -56,5 +58,5 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add index.html
-          git diff --cached --quiet || git commit -m "Add internship availability to portfolio"
+          git diff --cached --quiet || git commit -m "Add internship availability and phone contact"
           git push
