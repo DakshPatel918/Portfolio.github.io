@@ -798,7 +798,7 @@ const io = new IntersectionObserver((entries) => {
 revealEls.forEach(el => io.observe(el));
 
 // Active nav on scroll
-const sections = ['case-studies','projects', 'evidence', 'about', 'contact'].map(id => document.getElementById(id));
+const sections = ['case-studies','projects','evidence','about','coursework','recommendations','contact'].map(id => document.getElementById(id));
 const navLinks = document.querySelectorAll('.nav-links a');
 const setActive = () => {
   const scrollPos = window.scrollY + 120;
