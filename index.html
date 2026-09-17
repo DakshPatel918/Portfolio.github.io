@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daksh Patel — Finance Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #ffffff;
+    --bg-alt: #f5f5f7;
+    --text: #1d1d1f;
+    --text-dim: #6e6e73;
+    --accent: #2c2c2e;
+    --accent-bright: #48484a;
+    --card: #ffffff;
+    --line: rgba(0,0,0,0.08);
+  }
+
+  *{ box-sizing: border-box; }
+  html{ scroll-behavior: smooth; }
+
+  body{
+    margin:0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a{ color: inherit; text-decoration: none; }
+  ::selection{ background: var(--accent); color: #fff; }
+
+  .wrap{
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 0 28px;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation: none !important; transition: none !important; }
+  }
+
+  /* ---------- Nav ---------- */
+
+  nav.topnav{
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    backdrop-filter: saturate(180%) blur(20px);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    background: rgba(255,255,255,0.75);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .nav-inner{
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 0 28px;
+    height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .nav-name{
+    font-size: 0.92rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+
+  .nav-links{
+    display:flex;
+    gap: 32px;
+  }
+
+  .nav-links a{
+    font-size: 0.82rem;
+    color: var(--text-dim);
+    transition: color 0.2s ease;
+  }
+  .nav-links a:hover, .nav-links a.active{ color: var(--text); }
+
+  /* ---------- Hero ---------- */
+
+  .hero{
+    padding: 130px 0 110px;
+    text-align: center;
+  }
+
+  .hero .eyebrow{
+    font-size: 0.85rem;
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 18px;
+  }
+
+  .hero h1{
+    font-size: clamp(2.6rem, 6.5vw, 4.6rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.08;
+    margin: 0 auto 24px;
+    max-width: 16ch;
+  }
+
+  .hero p{
+    font-size: 1.2rem;
+    color: var(--text-dim);
+    max-width: 46ch;
+    margin: 0 auto 40px;
+  }
+
+  .hero-cta{
+    display:flex;
+    gap: 16px;
+    justify-content: center;
+  }
+
+  .btn{
+    display: inline-block;
+    padding: 13px 26px;
+    border-radius: 980px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: transform 0.15s ease, background 0.2s ease;
+  }
+  .btn:active{ transform: scale(0.97); }
+
+  .btn-primary{ background: var(--accent); color: #fff; }
+  .btn-primary:hover{ background: var(--accent-bright); }
+
+  .btn-secondary{ color: var(--accent); }
+  .btn-secondary:hover{ text-decoration: underline; }
+
+  /* ---------- Stat strip ---------- */
+
+  .stat-strip{
+    background: var(--bg-alt);
+    padding: 64px 0;
+  }
+
+  .stat-grid{
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    text-align: center;
+  }
+
+  .stat-grid .figure{
+    font-size: clamp(2.2rem, 4vw, 3rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+  .stat-grid .label{
+    font-size: 0.9rem;
+    color: var(--text-dim);
+    margin-top: 6px;
+  }
+
+  @media (max-width: 640px){
+    .stat-grid{ grid-template-columns: 1fr; gap: 36px; }
+  }
+
+  /* ---------- Reveal on scroll ---------- */
+
+  .reveal{
+    opacity: 0;
+    transform: translateY(22px);
+    transition: opacity 0.7s cubic-bezier(.16,.8,.3,1), transform 0.7s cubic-bezier(.16,.8,.3,1);
+  }
+  .reveal.in{ opacity: 1; transform: translateY(0); }
+
+  /* ---------- Section heads ---------- */
+
+  .section{ padding: 110px 0; }
+  .section.alt{ background: var(--bg-alt); }
+
+  .section-head{
+    text-align: center;
+    margin-bottom: 56px;
+  }
+
+  .section-head h2{
+    font-size: clamp(1.9rem, 3.4vw, 2.6rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin: 0 0 14px;
+  }
+
+  .section-head p{
+    color: var(--text-dim);
+    font-size: 1.05rem;
+    max-width: 44ch;
+    margin: 0 auto;
+  }
+
+  /* ---------- Project cards ---------- */
+
+  .card-grid{
+    display:grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  @media (max-width: 760px){
+    .card-grid{ grid-template-columns: 1fr; }
+  }
+
+  .card{
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    padding: 32px;
+    cursor: pointer;
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+    text-align: left;
+  }
+
+  .card:hover{
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+    border-color: transparent;
+  }
+
+  .card:focus-visible{ outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  .card .tag-row{
+    display:flex;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+
+  .card .tag-row span{
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--accent);
+    background: rgba(0,0,0,0.05);
+    padding: 4px 10px;
+    border-radius: 980px;
+  }
+
+  .card h3{
+    font-size: 1.3rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    margin: 0 0 10px;
+  }
+
+  .card p.desc{
+    color: var(--text-dim);
+    font-size: 0.96rem;
+    margin: 0 0 22px;
+  }
+
+  .card .card-foot{
+    display:flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    border-top: 1px solid var(--line);
+    padding-top: 18px;
+  }
+
+  .card .metric-val{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 1.3rem;
+    font-weight: 500;
+    color: var(--text);
+  }
+  .card .metric-val.neg{ color: #b3452f; }
+  .card .metric-label{
+    font-size: 0.78rem;
+    color: var(--text-dim);
+    margin-top: 2px;
+  }
+
+  .card .expand-cue{
+    font-size: 0.85rem;
+    color: var(--accent);
+    font-weight: 500;
+    display:flex;
+    align-items:center;
+    gap: 5px;
+  }
+
+  .card .expand-cue svg{ width: 14px; height: 14px; }
+
+  /* ---------- Modal ---------- */
+
+  .modal-overlay{
+    position: fixed;
+    inset: 0;
+    background: rgba(29,29,31,0.4);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    z-index: 1000;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+  }
+  .modal-overlay.open{ opacity: 1; pointer-events: all; }
+
+  .modal{
+    background: #fff;
+    border-radius: 24px;
+    max-width: 560px;
+    width: 100%;
+    max-height: 84vh;
+    overflow-y: auto;
+    padding: 40px;
+    transform: scale(0.94) translateY(10px);
+    transition: transform 0.3s cubic-bezier(.16,.8,.3,1);
+  }
+  .modal-overlay.open .modal{ transform: scale(1) translateY(0); }
+
+  .modal-close{
+    float: right;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--bg-alt);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor: pointer;
+    font-size: 1rem;
+    color: var(--text-dim);
+  }
+  .modal-close:hover{ background: #e8e8ed; }
+
+  .modal h3{
+    font-size: 1.6rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    margin: 0 0 6px;
+    clear: both;
+    padding-top: 4px;
+  }
+
+  .modal .modal-desc{
+    color: var(--text-dim);
+    margin: 0 0 28px;
+    font-size: 1rem;
+  }
+
+  .modal .detail-row{
+    display:flex;
+    justify-content: space-between;
+    padding: 13px 0;
+    border-top: 1px solid var(--line);
+    font-size: 0.92rem;
+  }
+  .modal .detail-row:last-child{ border-bottom: 1px solid var(--line); }
+  .modal .detail-row .k{ color: var(--text-dim); }
+  .modal .detail-row .v{ font-weight: 500; font-family: 'IBM Plex Mono', monospace; font-size: 0.85rem; }
+
+  /* ---------- About ---------- */
+
+  .about-layout{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: start;
+  }
+
+  @media (max-width: 760px){
+    .about-layout{ grid-template-columns: 1fr; gap: 36px; }
+  }
+
+  .about-layout p{
+    color: var(--text-dim);
+    font-size: 1.08rem;
+  }
+
+  .skills-list{
+    display:flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .skills-list span{
+    font-size: 0.85rem;
+    padding: 8px 16px;
+    border-radius: 980px;
+    background: #fff;
+    border: 1px solid var(--line);
+  }
+
+  /* ---------- Contact ---------- */
+
+  .contact{
+    text-align: center;
+  }
+
+  .contact h2{
+    font-size: clamp(1.9rem, 3.4vw, 2.6rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin: 0 0 16px;
+  }
+
+  .contact p{
+    color: var(--text-dim);
+    max-width: 42ch;
+    margin: 0 auto 36px;
+    font-size: 1.05rem;
+  }
+
+  footer{
+    padding: 28px 0;
+    text-align: center;
+    font-size: 0.8rem;
+    color: var(--text-dim);
+    border-top: 1px solid var(--line);
+  }
+
+  .editme{
+    font-size: 0.78rem;
+    color: #b3452f;
+    background: rgba(179,69,47,0.07);
+    border: 1px dashed rgba(179,69,47,0.4);
+    padding: 12px 16px;
+    border-radius: 10px;
+    margin: 28px 0 0;
+    text-align: center;
+  }
+
+  .proof-badge{display:inline-block;font-size:.72rem;font-weight:600;color:#176b45;background:#edf8f1;padding:5px 10px;border-radius:980px;margin:0 0 14px}.modal-actions{display:flex;flex-wrap:wrap;gap:9px;margin-top:22px}.evidence-btn{padding:10px 14px;border-radius:980px;background:var(--text);color:white;font-size:.8rem;font-weight:600}.evidence-btn.alt{background:var(--bg-alt);color:var(--text);border:1px solid var(--line)}.evidence-section{padding:90px 0;background:#111;color:#fff}.evidence-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.evidence-box{border:1px solid rgba(255,255,255,.13);border-radius:18px;padding:24px;background:rgba(255,255,255,.04)}.evidence-box p{color:#aaa;font-size:.88rem}.disclosure{margin-top:24px;color:#aaa;font-size:.82rem;line-height:1.6;border-top:1px solid rgba(255,255,255,.13);padding-top:20px}@media(max-width:760px){.evidence-grid{grid-template-columns:1fr}}
+
+  .hero-profile{display:grid;grid-template-columns:1.35fr .65fr;gap:54px;align-items:center;text-align:left}.hero-profile .hero-cta{justify-content:flex-start}.headshot-wrap{display:flex;justify-content:center}.headshot{width:min(300px,100%);aspect-ratio:4/5;object-fit:cover;object-position:center 24%;border-radius:28px;box-shadow:0 24px 60px rgba(0,0,0,.12);border:1px solid var(--line)}.featured-strip{padding:100px 0;background:#111;color:#fff}.featured-strip .section-head p{color:#aaa}.featured-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.featured-card{display:block;background:#1b1b1d;border:1px solid rgba(255,255,255,.1);border-radius:18px;padding:24px;transition:.2s}.featured-card:hover{transform:translateY(-3px);border-color:rgba(255,255,255,.3)}.featured-card .small{font-size:.75rem;color:#aaa;text-transform:uppercase;letter-spacing:.06em}.featured-card h3{font-size:1.08rem;margin:8px 0}.featured-card p{font-size:.84rem;color:#aaa;margin:0}.realworld{background:#f5f5f7;padding:90px 0}.realworld-box{display:grid;grid-template-columns:1fr 1fr;gap:42px;align-items:center}.realworld .big{font-size:2.2rem;font-weight:700}.realworld .mini{color:var(--text-dim);font-size:.85rem}@media(max-width:760px){.hero-profile,.realworld-box{grid-template-columns:1fr}.hero-profile{text-align:center}.hero-profile .hero-cta{justify-content:center}.headshot{width:230px}.featured-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+  <div class="nav-inner">
+    <div class="nav-name">Daksh Patel</div>
+    <div class="nav-links">
+      <a href="#case-studies">Case Studies</a>
+       <a href="#projects">All Projects</a>
+      <a href="#evidence">Evidence</a>
+       <a href="#about">About</a>
+       <a href="Daksh_Patel_Resume.pdf" target="_blank">Résumé</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="wrap hero-profile"><div>
+    <div class="eyebrow reveal">Loyola University Chicago · Finance & Accounting · Expected May 2028</div>
+    <h1 class="reveal">Finance analysis backed by the actual work.</h1>
+    <p class="reveal">Finance and accounting student building hands-on experience across investment banking, private equity, asset management, credit, and quantitative investing. Explore the models, assumptions, results, and supporting files behind each project.</p>
+    <div class="hero-cta reveal">
+      <a href="#projects" class="btn btn-primary">View projects</a>
+      <a href="Daksh_Patel_Resume.pdf" class="btn btn-secondary" target="_blank">View résumé →</a>
+    </div>
+    <div class="headshot-wrap reveal"><img class="headshot" src="assets/daksh-patel-headshot.jpg" alt="Professional headshot of Daksh Patel"></div>
+  </div>
+</section>
+
+<div class="stat-strip">
+  <div class="wrap stat-grid">
+    <div class="reveal"><div class="figure">17</div><div class="label">finance projects</div></div>
+    <div class="reveal"><div class="figure">8+</div><div class="label">technical disciplines</div></div>
+    <div class="reveal"><div class="figure">Files</div><div class="label">models + reports included</div></div>
+  </div>
+</div>
+
+<section class="featured-strip" id="case-studies"><div class="wrap"><div class="section-head reveal"><h2>Flagship case studies</h2><p>Six projects with model previews, methodology, assumptions, results, limitations, and direct links to the underlying work.</p></div><div class="featured-grid">
+<a class="featured-card reveal" href="case-studies/apple-3-statement.html"><div class="small">Financial Modeling</div><h3>Apple 3-Statement Model</h3><p>Integrated statements, forecasts, capital allocation, and reconciliation checks.</p></a>
+<a class="featured-card reveal" href="case-studies/nvidia-comps.html"><div class="small">Comps</div><h3>NVIDIA Trading Comps</h3><p>Peer multiples, valuation ranges, and framework selection.</p></a>
+<a class="featured-card reveal" href="case-studies/jpm-fcfe.html"><div class="small">Equity Research</div><h3>JPM FCFE Valuation</h3><p>Bank-specific distributable equity cash-flow valuation.</p></a>
+<a class="featured-card reveal" href="case-studies/academy-lbo.html"><div class="small">Private Equity</div><h3>Academy Sports LBO</h3><p>Sources & uses, debt paydown, exit returns, and sensitivities.</p></a>
+<a class="featured-card reveal" href="case-studies/bank-ma.html"><div class="small">M&A</div><h3>JPM × Fifth Third</h3><p>Accretion/dilution, TBV, capital, purchase accounting, and synergies.</p></a>
+<a class="featured-card reveal" href="case-studies/portfolio-risk.html"><div class="small">Asset Management</div><h3>Portfolio Risk Dashboard</h3><p>Volatility, beta, Sharpe, VaR/CVaR, drawdown, and concentration.</p></a>
+</div></div></section>
+<section class="section" id="projects">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <h2>Selected work</h2>
+      <p>Each project includes the method, assumptions, result, and—where available—the underlying Excel, PowerPoint, memo, or one-page report.</p>
+    </div>
+    <div class="card-grid" id="cardGrid"></div>
+  </div>
+</section>
+
+<section class="evidence-section" id="evidence"><div class="wrap"><div class="section-head reveal"><h2>Evidence & verification</h2><p style="color:#aaa">Recruiters can review the supporting artifacts behind the project summaries.</p></div><div class="evidence-grid"><div class="evidence-box reveal"><h3>Underlying models</h3><p>Excel workbooks are included for valuation, M&A, LBO, portfolio, credit, fixed-income, and quantitative projects where available.</p></div><div class="evidence-box reveal"><h3>One-page reports</h3><p>Concise project reports document the objective, methodology, key assumptions, outputs, risks, and interview takeaway.</p></div><div class="evidence-box reveal"><h3>Presentations & memos</h3><p>Presentation-heavy work includes the supporting PowerPoint or investment-committee memo rather than only a website claim.</p></div></div><div class="disclosure reveal"><strong>Disclosure:</strong> This portfolio is for educational and recruiting purposes. Hypothetical transactions are labeled as hypothetical. Synthetic, deterministic, simulated, or illustrative datasets are not presented as realized historical investment performance. Company and market figures should be interpreted using the reference dates and source notes in each underlying file.</div></div></section>
+<section class="realworld"><div class="wrap realworld-box"><div class="reveal"><div class="eyebrow">Real-world investment experience</div><h2 style="font-size:2rem;margin:10px 0 14px">Residential Property Investment & Renovation</h2><p style="color:var(--text-dim)">A self-directed investment project involving market analysis, acquisition screening, renovation budgeting, capital allocation, project management, and resale negotiations.</p><a class="btn btn-primary" href="case-studies/property-investment.html">View case study</a></div><div class="reveal"><div class="big">$20K</div><div class="mini">materials budget</div><br><div class="big">$40K</div><div class="mini">reported profit</div><br><div class="big">50%</div><div class="mini">reported ROI within 4 months</div></div></div></section>
+<section class="section alt" id="about">
+  <div class="wrap">
+    <div class="about-layout">
+      <div class="reveal">
+        <h2 style="font-size:2rem; font-weight:700; letter-spacing:-0.02em; margin:0 0 18px;">About</h2>
+        <p>I am a Finance & Accounting student at Loyola University Chicago's Quinlan School of Business. Through Rambler Consulting Group and independent finance projects, I have developed experience structuring market, financial, and operational analysis and translating quantitative findings into decision-oriented presentations. I am pursuing finance opportunities where valuation, investment analysis, transactions, portfolio management, and credit intersect.</p>
+      </div>
+      <div class="reveal">
+        <h4 style="font-size:0.85rem; color:var(--text-dim); font-weight:600; margin:0 0 16px;">Tools & methods</h4>
+        <div class="skills-list">
+          <span>Microsoft Excel</span>
+          <span>3-Statement Modeling</span>
+          <span>DCF / FCFE</span>
+          <span>Trading Comps</span>
+          <span>M&A</span>
+          <span>LBO Modeling</span>
+          <span>Equity Research</span>
+          <span>Portfolio Analytics</span>
+          <span>Credit Analysis</span>
+          <span>Fixed Income</span>
+          <span>Bloomberg Market Concepts</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section contact" id="contact">
+  <div class="wrap">
+    <div class="reveal">
+      <h2>Let's talk</h2>
+      <p>Open to internship and analyst conversations. Reach out directly or find my work elsewhere.</p>
+      <div class="hero-cta">
+        <a href="mailto:dakshpatel091805@gmail.com" class="btn btn-primary">Email me</a>
+        <a href="https://www.linkedin.com/in/dakshpatel918" class="btn btn-secondary" target="_blank" rel="noopener">LinkedIn →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>Daksh Patel — Finance Portfolio · Updated September 2026</footer>
+
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal" id="modalBody"></div>
+</div>
+
+<script>
+const PROJECTS = [
+  {
+    title: "Investment Banking M&A Pitchbook — YETI Holdings",
+    evidence: ["evidence/01_Investment_Banking_MA_Pitchbook.pptx","evidence/01_Investment_Banking_M&A_Pitchbook_One_Page.pdf"],
+    desc: "Full acquisition pitchbook for a hypothetical strategic acquisition of YETI Holdings, covering target overview, trading comps, precedent transactions, valuation triangulation, synergies, and accretion/dilution for an illustrative scaled strategic acquirer.",
+    tags: ["PowerPoint", "M&A"],
+    metricLabel: "offer premium / implied entry multiple",
+    metricVal: "+25% / ~17.6x EBITDA",
+    neg: false,
+    detail: [["Target", "YETI Holdings — FY25 revenue $1.87B, EBITDA $268M"], ["Offer price", "$58.75 (25% premium to $47.00)"], ["Equity purchase price", "≈ $4.6B"], ["Consideration", "60% cash / 40% stock"], ["Synergies", "~5% target SG&A cost saves + 3% revenue synergies by Yr. 2"], ["Yr. 1 / Yr. 2 EPS impact", "-1.5% (dilutive) → +2.0% (accretive)"]]
+  },
+  {
+    title: "Equity Research — Mastercard (MA)",
+    evidence: ["evidence/02_Equity_Research_Stock_Pitch.xlsx","evidence/02_Equity_Research_Stock_Pitch_One_Page.pdf"],
+    desc: "Bull/base/bear equity research pitch on Mastercard built around consensus EPS growth, cross-border volume recovery, and valuation multiple assumptions, with a target-price framework and identified catalysts and risks.",
+    tags: ["Excel", "Equity Research"],
+    metricLabel: "base case implied upside",
+    metricVal: "+13%",
+    neg: false,
+    detail: [["Reference price", "~$570 (Sept. 2026)"], ["2027E consensus EPS", "$23.03"], ["Base case", "28x target P/E → ~$645"], ["Bull case", "30x P/E, EPS to $24.50 → ~$735 (+29%)"], ["Bear case", "24x P/E, EPS to $21.00 → ~$504 (-12%)"], ["Catalysts", "Capital One renewal, cross-border volume, BVNK stablecoin settlement"]]
+  },
+  {
+    title: "PE Investment Committee Memo — Platform Investment",
+    evidence: ["evidence/05_PE_Investment_Committee_Memo.docx","evidence/05_PE_Investment_Committee_Case_One_Page.pdf"],
+    desc: "IC memo for a hypothetical middle-market platform investment in specialty distribution, covering the buy-and-build thesis, base and downside case returns, key diligence findings, and a go/no-go recommendation.",
+    tags: ["Word", "Private Equity"],
+    metricLabel: "base case 5-yr IRR (downside case)",
+    metricVal: "19.2% (11.4%)",
+    neg: false,
+    detail: [["Thesis", "Buy-and-build in fragmented specialty distribution"], ["Entry multiple", "7.0x EBITDA"], ["Value creation", "EBITDA growth + 2-3 bolt-on acquisitions at multiple arbitrage"], ["Base case MOIC / IRR", "2.4x / 19.2%"], ["Downside case MOIC / IRR", "1.6x / 11.4%"], ["IC recommendation", "Proceed to exclusivity, subject to QoE and management diligence"]]
+  },
+  {
+    title: "Commercial Credit Underwriting",
+    evidence: ["evidence/07_Commercial_Credit_Underwriting.xlsx","evidence/07_Commercial_Credit_Underwriting_One_Page.pdf"],
+    desc: "Underwriting case for an illustrative middle-market industrial distributor, building a 3-year leverage and coverage trend, a covenant package, and a downside case to support a facility recommendation.",
+    tags: ["Excel", "Credit"],
+    metricLabel: "proposed facility",
+    metricVal: "$55MM",
+    neg: false,
+    detail: [["Borrower profile", "Illustrative middle-market industrial distributor"], ["Leverage trend (24A→26E)", "3.1x → 2.1x Debt/EBITDA"], ["Interest coverage (24A→26E)", "3.4x → 4.8x"], ["Facility", "$35MM revolver + $20MM term loan"], ["Key covenants", "Max leverage 3.5x; min FCCR 1.5x"], ["Recommendation", "Approve with covenants"]]
+  },
+  {
+    title: "Fixed Income — Laddered Bond Portfolio",
+    evidence: ["evidence/06_Fixed_Income_Bond_Portfolio.xlsx","evidence/06_Fixed_Income_-_Bond_Portfolio_One_Page.pdf"],
+    desc: "Duration and interest-rate scenario analysis for a laddered Treasury and investment-grade corporate bond portfolio, built on the actual September 2026 Treasury curve amid the steepest bond selloff since 2007.",
+    tags: ["Excel", "Fixed Income"],
+    metricLabel: "portfolio modified duration",
+    metricVal: "6.58 yrs",
+    neg: false,
+    detail: [["Portfolio yield to maturity", "5.10% (weighted average)"], ["Holdings", "2Y/5Y/10Y/30Y Treasuries + 10Y IG corporate"], ["+100bp parallel shift", "≈ -6.6% price impact"], ["-100bp parallel shift", "≈ +6.6% price impact"], ["Yield curve used", "Sept 15, 2026: 2Y 4.63%, 10Y 4.96%, 30Y 5.35%"]]
+  },
+  {
+    title: "Multi-Factor Backtest — Momentum, Value, Quality, Low-Vol",
+    evidence: ["evidence/04_Multi_Factor_Backtest.xlsx","evidence/04_Multi-Factor_Backtest_One_Page.pdf"],
+    desc: "Compares four single-factor equity strategies against a blended multi-factor portfolio and a broad market benchmark, testing whether combining factors improves risk-adjusted returns versus any single factor alone.",
+    tags: ["Excel", "Quant"],
+    metricLabel: "blended multi-factor Sharpe vs. best single factor",
+    metricVal: "0.62 vs. 0.51",
+    neg: false,
+    detail: [["Factors tested", "Momentum, Value, Quality, Low-Volatility"], ["Best single factor", "Quality: 11.4% CAGR, 15.8% vol, 0.51 Sharpe"], ["Blended multi-factor", "11.1% CAGR, 11.9% vol, 0.62 Sharpe"], ["Benchmark", "9.8% CAGR, 17.5% vol, 0.34 Sharpe"], ["Key finding", "Diversification across factors cuts volatility more than it costs in return"]]
+  },
+  {
+    title: "Monte Carlo Valuation — Large-Cap Technology",
+    evidence: ["evidence/08_Monte_Carlo_Valuation.xlsx","evidence/08_Monte_Carlo_Valuation_One_Page.pdf"],
+    desc: "Probability-weighted DCF for a large-cap technology company, running 20,000 simulations across uncertain revenue growth, operating margin, WACC, and terminal growth to produce a full valuation distribution instead of a single point estimate.",
+    tags: ["Python", "Valuation"],
+    metricLabel: "probability model value exceeds $510 reference price",
+    metricVal: "16.1%",
+    neg: true,
+    detail: [["Simulations", "20,000 trials"], ["Median implied value (P50)", "$414.60"], ["90% confidence interval", "$311.03 – $599.17"], ["Reference price", "$510.00"], ["Key uncertain inputs", "Revenue growth ~N(13%,3%); WACC ~N(8.5%,0.8%); terminal growth ~N(3.5%,0.5%)"]]
+  },
+  {
+    title: "Portfolio Optimization — Efficient Frontier",
+    evidence: ["evidence/03_Portfolio_Optimization_Efficient_Frontier.xlsx","evidence/03_Portfolio_Optimization_-_Efficient_Frontier_One_Page.pdf"],
+    desc: "Mean-variance optimization across five asset classes — US equity, growth equity, bonds, gold, and REITs — solving for the minimum-variance and maximum-Sharpe portfolios along the efficient frontier under long-only constraints.",
+    tags: ["Python", "Asset Allocation"],
+    metricLabel: "max-Sharpe portfolio Sharpe ratio",
+    metricVal: "0.46",
+    neg: false,
+    detail: [["Asset universe", "VOO, QQQ, AGG, GLD, VNQ"], ["Max-Sharpe allocation", "40% QQQ, 39% AGG, 21% GLD"], ["Max-Sharpe return / vol", "8.4% / 9.5%"], ["Min-variance return / vol", "5.4% / 5.4%"], ["Naive benchmark Sharpe", "0.42 (45/15/30/5/5 mix)"], ["Method", "Long-only mean-variance optimization, 4% risk-free rate"]]
+  },
+  {
+    title: "Portfolio Performance Attribution",
+    evidence: ["evidence/09_Portfolio_Performance_Attribution.xlsx","evidence/09_Portfolio_Performance_Attribution_One_Page.pdf"],
+    desc: "Brinson-Fachler attribution decomposing a model portfolio's active return vs. a sector benchmark into allocation, security-selection, and interaction effects across seven GICS sectors.",
+    tags: ["Excel", "Attribution"],
+    metricLabel: "total active return vs. benchmark",
+    metricVal: "+1.44%",
+    neg: false,
+    detail: [["Portfolio / benchmark return", "13.59% / 12.15%"], ["Allocation effect", "+0.59%"], ["Selection effect", "+0.51%"], ["Interaction effect", "+0.34%"], ["Largest single driver", "Technology security selection: +0.84%"]]
+  },
+  {
+    title: "Apple — Full 3-Statement Financial Model",
+    evidence: ["evidence/Apple_Full_3_Statement_Model.xlsx","evidence/Apple_3_Statement_Model_One_Page.pdf"],
+    desc: "Integrated income statement, balance sheet, and cash flow model for Apple, linked through working capital, capex, debt, and capital-return assumptions, with FY2023A–2025A historicals and a FY2026E–2030E forecast plus automated balance/cash reconciliation checks.",
+    tags: ["Excel", "Financial Modeling"],
+    metricLabel: "diluted EPS CAGR (2025A–2030E)",
+    metricVal: "+13.0%",
+    neg: false,
+    detail: [["2025A revenue", "$416.2B"], ["2030E revenue", "$633.6B"], ["2025A diluted EPS", "$7.49"], ["2030E diluted EPS", "$13.81"], ["2030E operating margin", "34.6%"], ["2030E free cash flow", "$210.7B"]]
+  },
+  {
+    title: "NVIDIA — Comparable Companies Analysis",
+    evidence: ["evidence/NVIDIA_Comparable_Companies_Analysis.xlsx","evidence/NVIDIA_Trading_Comps_One_Page.pdf"],
+    desc: "Trading comps benchmarking NVIDIA against AMD, Broadcom, Marvell, and Qualcomm across EV/Revenue, EV/EBITDA, and P/E, using a revenue-multiple framework since NVIDIA's outsized margins distort earnings- and EBITDA-based medians.",
+    tags: ["Excel", "Comps"],
+    metricLabel: "implied premium vs. $210.96 ref. price (EV/Revenue)",
+    metricVal: "+11.7%",
+    neg: false,
+    detail: [["Peer set", "AMD, AVGO, MRVL, QCOM"], ["NVDA EV/Revenue", "17.3x vs. 20.0x peer median"], ["NVDA EV/EBITDA", "24.2x vs. 52.0x peer median"], ["NVDA P/E", "26.7x vs. 61.2x peer median"], ["EV/Revenue range (25th–median–75th)", "$188.99 – $235.58 – $240.80"], ["EV/EBITDA range (25th–median–75th)", "$248.66 – $436.20 – $623.67"], ["P/E range (25th–median–75th)", "$316.00 – $484.33 – $701.26"]]
+  },
+  {
+    title: "JPMorgan Chase — FCFE Valuation",
+    evidence: ["evidence/JPM_FCFE_DCF_Portfolio_Project.xlsx","evidence/JPM_Equity_Research_One_Page.pdf"],
+    desc: "Independent equity research valuing JPM with a bank-specific FCFE model rather than a standard FCFF/WACC DCF, forecasting distributable equity cash flow through 2030 and discounting at cost of equity.",
+    tags: ["Excel", "Equity Research"],
+    metricLabel: "implied downside vs. $345.40 ref. price",
+    metricVal: "-15.3%",
+    neg: true,
+    detail: [["FCFE fair value", "$292.40 / share"], ["Cost of equity", "9.5%"], ["Terminal growth", "3.0%"], ["2025 ROTCE", "20%"], ["2Q26 ROTCE", "23%"], ["2Q26 CET1 ratio", "14.1%"]]
+  },
+  {
+    title: "Academy Sports + Outdoors — Hypothetical Sponsor LBO",
+    evidence: ["evidence/Academy_Sports_LBO_Model.xlsx","evidence/Academy_Sports_LBO_One_Page.pdf"],
+    desc: "Private-equity LBO model for a hypothetical sponsor acquisition of Academy Sports + Outdoors, with a full debt paydown schedule, EBITDA growth build, and returns analysis across entry/exit multiple and leverage assumptions.",
+    tags: ["Excel", "LBO"],
+    metricLabel: "5-year IRR",
+    metricVal: "23.4%",
+    neg: false,
+    detail: [["Offer price / entry multiple", "$67.81, 6.4x EV/EBITDA"], ["Financing", "4.5x initial debt/EBITDA"], ["Sponsor equity", "$1.63B of $4.18B purchase equity"], ["EBITDA growth", "$710M (2026E) → $915M (2031E)"], ["Debt paydown", "~$2.22B through amortization + cash sweep"], ["Exit assumptions", "6.0x exit multiple, 5-year hold"], ["5-year MOIC", "2.86x"]]
+  },
+  {
+    title: "Momentum Backtest — US Large Cap",
+    evidence: ["evidence/Momentum_Backtest_US_Large_Cap.xlsx","evidence/Momentum_Backtest_US_Large_Cap_One_Page.pdf"],
+    desc: "Cross-sectional 12-1 momentum backtest across a 20-stock US large-cap universe, ranking on t-12 to t-2 cumulative returns, holding the top quintile equal-weighted with monthly rebalancing and turnover-based transaction costs.",
+    tags: ["Excel", "Quant"],
+    metricLabel: "annualized excess return vs. benchmark",
+    metricVal: "+4.9%",
+    neg: false,
+    detail: [["Universe", "20 illustrative US large-cap equities"], ["Signal", "Cumulative return, t-12 to t-2"], ["Selection / weighting", "Top 4 stocks (top 20%), equal-weighted"], ["Momentum CAGR vs. benchmark", "10.1% vs. 5.2%"], ["Max drawdown", "27.5%"], ["Monthly hit rate", "61.9%"]]
+  },
+  {
+    title: "Portfolio Risk Dashboard",
+    evidence: ["evidence/Portfolio_Risk_Dashboard.xlsx","evidence/Portfolio_Risk_Dashboard_One_Page.pdf"],
+    desc: "Risk analytics dashboard for a 10-stock diversified equity model portfolio vs. SPY, covering return, volatility, beta, Sharpe ratio, VaR/CVaR, drawdown, concentration, and holding-level risk contribution.",
+    tags: ["Excel", "Risk"],
+    metricLabel: "max drawdown (peak-to-trough)",
+    metricVal: "-24.4%",
+    neg: true,
+    detail: [["Holdings", "AAPL, MSFT, NVDA, JPM, AMZN, GOOGL, XOM, JNJ, COST, V"], ["Annualized return", "12.9% vs. SPY benchmark"], ["Volatility / Beta", "20.1% / 1.22"], ["Sharpe ratio", "0.44 (4.0% risk-free rate)"], ["1-mo 95% VaR / CVaR", "8.2% / 9.3%"], ["Largest position / sector weight", "14% single stock, 39% tech"], ["Diversification score", "~95% (effective-N methodology)"]]
+  },
+  {
+    title: "JPMorgan Chase × Fifth Third — Hypothetical Bank M&A",
+    evidence: ["evidence/JPM_FITB_Hypothetical_Bank_MA_Model.xlsx","evidence/JPM_Fifth_Third_MA_One_Page.pdf"],
+    desc: "Bank-specific accretion/dilution model for a hypothetical 100% stock acquisition of Fifth Third Bancorp by JPMorgan Chase, incorporating tangible book value, purchase accounting, capital impact, and cost/revenue synergies.",
+    tags: ["Excel", "M&A"],
+    metricLabel: "Year 2 EPS accretion / (dilution)",
+    metricVal: "+0.9%",
+    neg: false,
+    detail: [["Offer premium", "20.0% to reference FITB price"], ["Equity purchase price", "$59.8B"], ["Consideration", "100% stock, 170.7mm new JPM shares"], ["Purchase price / TCE", "2.85x"], ["TBVPS dilution (pro forma)", "-14.5% ($113.35 → $96.93)"], ["Pro forma CET1 (illustrative)", "13.75% vs. 14.1% standalone"], ["Synergies assumed", "15% cost saves, 2% revenue, phased 50%/100% Y1/Y2"]]
+  },
+  {
+    title: "Credit Risk Scoring Model",
+    evidence: ["evidence/Credit_Risk_Scoring_Model.xlsx","evidence/Credit_Risk_Scoring_Model_One_Page.pdf"],
+    desc: "Borrower-level credit scorecard and portfolio dashboard across 500 synthetic borrowers, mapping FICO, DTI, utilization, delinquencies, employment, and loan-to-income into risk points, PD estimates, A–E risk tiers, and expected credit loss.",
+    tags: ["Excel", "Credit"],
+    metricLabel: "Tier A indicative PD",
+    metricVal: "< 3%",
+    neg: false,
+    detail: [["Sample", "500 synthetic borrowers"], ["Risk tiers", "A (0–19 pts) → E (80+ pts)"], ["Tier E indicative PD", "> 30%"], ["Loss framework", "Expected Loss = PD × EAD × LGD"], ["Illustrative LGD", "45%"], ["Underwriting factors", "FICO, DTI, utilization, delinquencies, employment, loan/income"]]
+  },
+];
+
+const grid = document.getElementById('cardGrid');
+const overlay = document.getElementById('modalOverlay');
+const modalBody = document.getElementById('modalBody');
+
+PROJECTS.forEach((p) => {
+  const card = document.createElement('div');
+  card.className = 'card reveal';
+  card.setAttribute('tabindex', '0');
+  card.setAttribute('role', 'button');
+  const tags = p.tags.map(t => `<span>${t}</span>`).join('');
+
+  card.innerHTML = `
+    <div class="tag-row">${tags}</div>${p.evidence?.length ? `<div class="proof-badge">✓ Supporting evidence available</div>` : ``}
+    <h3>${p.title}</h3>
+    <p class="desc">${p.desc}</p>
+    <div class="card-foot">
+      <div>
+        <div class="metric-val ${p.neg ? 'neg' : ''}">${p.metricVal}</div>
+        <div class="metric-label">${p.metricLabel}</div>
+      </div>
+      <div class="expand-cue">Details
+        <svg viewBox="0 0 20 20" fill="none"><path d="M7.5 5L12.5 10L7.5 15" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+    </div>
+  `;
+
+  const open = () => {
+    const rows = p.detail.map(([k,v]) => `<div class="detail-row"><span class="k">${k}</span><span class="v">${v}</span></div>`).join('');
+    modalBody.innerHTML = `
+      <div class="modal-close" id="modalClose">✕</div>
+      <h3>${p.title}</h3>
+      <p class="modal-desc">${p.desc}</p>
+      ${rows}
+      ${p.evidence?.length ? `<div class="modal-actions">${p.evidence.map((u,i)=>`<a class="evidence-btn ${i?'alt':''}" href="${u}" target="_blank" rel="noopener">${u.toLowerCase().endsWith('.pdf')?'View report':'Open supporting file'}</a>`).join('')}</div>` : ''}
+    `;
+    overlay.classList.add('open');
+    document.getElementById('modalClose').addEventListener('click', close);
+  };
+
+  card.addEventListener('click', open);
+  card.addEventListener('keydown', (e) => { if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); open(); } });
+
+  grid.appendChild(card);
+});
+
+function close(){ overlay.classList.remove('open'); }
+overlay.addEventListener('click', (e) => { if(e.target === overlay) close(); });
+document.addEventListener('keydown', (e) => { if(e.key === 'Escape') close(); });
+
+// Scroll reveal
+const revealEls = document.querySelectorAll('.reveal');
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting){
+      entry.target.classList.add('in');
+      io.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.15 });
+revealEls.forEach(el => io.observe(el));
+
+// Active nav on scroll
+const sections = ['case-studies','projects', 'evidence', 'about', 'contact'].map(id => document.getElementById(id));
+const navLinks = document.querySelectorAll('.nav-links a');
+const setActive = () => {
+  const scrollPos = window.scrollY + 120;
+  let current = sections[0];
+  sections.forEach(sec => { if (sec && sec.offsetTop <= scrollPos) current = sec; });
+  navLinks.forEach(link => link.classList.toggle('active', link.getAttribute('href') === `#${current.id}`));
+};
+window.addEventListener('scroll', setActive, { passive: true });
+setActive();
+</script>
+
+</body>
+</html>
