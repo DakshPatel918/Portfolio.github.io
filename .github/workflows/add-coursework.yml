@@ -1,8 +1,7 @@
 name: Add relevant coursework section
 on:
   push:
-    paths:
-      - '.github/workflows/add-coursework.yml'
+    paths: ['.github/workflows/add-coursework.yml']
 permissions:
   contents: write
 jobs:
@@ -17,30 +16,13 @@ jobs:
           p=Path('index.html')
           s=p.read_text()
           nav='      <a href="#coursework">Coursework</a>\n'
-          if '#coursework' not in s:
-              marker='      <a href="#recommendations">Recommendations</a>'
-              if marker in s: s=s.replace(marker, nav+marker, 1)
-          section='''
-<section class="section alt" id="coursework">
-  <div class="wrap">
-    <div class="section-head reveal"><h2>Relevant Coursework</h2><p>Selected business, finance, accounting, analytics, economics, and quantitative coursework completed at Loyola University Chicago.</p></div>
-    <div class="card-grid">
-      <div class="card reveal" style="cursor:default;"><div class="proof-badge">Finance</div><h3>Finance</h3><p class="desc"><strong>FINC 334</strong> — Principles of Corporate Finance <span style="font-weight:700;">· A / 100%</span><br><strong>FINC 335</strong> — Investments</p><a href="recommendation-wemhoff.html" class="btn btn-secondary" style="padding-left:0;">FINC 334 verification →</a></div>
-      <div class="card reveal" style="cursor:default;"><h3>Accounting & Taxation</h3><p class="desc"><strong>ACCT 201</strong> — Introductory Accounting I<br><strong>ACCT 202</strong> — Introductory Accounting II<br><strong>ACCT 303</strong> — Intermediate Accounting I<br><strong>ACCT 328</strong> — Concepts in Taxation</p></div>
-      <div class="card reveal" style="cursor:default;"><h3>Economics</h3><p class="desc"><strong>ECON 201</strong> — Principles of Microeconomics<br><strong>ECON 202</strong> — Principles of Macroeconomics<br><strong>ECON 303</strong> — Intermediate Microeconomics</p></div>
-      <div class="card reveal" style="cursor:default;"><h3>Analytics & Information Systems</h3><p class="desc"><strong>INFS 247</strong> — Business Information Systems<br><strong>INFS 343</strong> — Business Analytics<br><strong>ISSCM 241</strong> — Business Statistics</p></div>
-      <div class="card reveal" style="cursor:default;"><h3>Operations & Management</h3><p class="desc"><strong>SCMG 232</strong> — Introduction to Supply Chain Management<br><strong>MGMT 201</strong> — Managing People and Organizations</p></div>
-      <div class="card reveal" style="cursor:default;"><h3>Business Foundations</h3><p class="desc"><strong>MARK 201</strong> — Principles of Marketing<br><strong>LREB 315</strong> — Law and the Regulatory Environment of Business I<br><strong>COMM 103</strong> — Business & Professional Speaking</p></div>
-      <div class="card reveal" style="cursor:default;"><h3>Quantitative Foundations</h3><p class="desc"><strong>MATH 110</strong> — Business Precalculus<br><strong>MATH 130</strong> — Business Calculus</p></div>
-      <div class="card reveal" style="cursor:default;"><h3>Professional Development</h3><p class="desc"><strong>QUIN 101</strong> — Business Learning and Careers<br><strong>QUIN 102</strong> — Financial Literacy and Well-Being<br><strong>QUIN 202</strong> — Career Preparation</p></div>
-    </div>
-  </div>
-</section>
-'''
+          nav_marker='      <a href="#recommendations">Recommendations</a>'
+          if '#coursework' not in s and nav_marker in s: s=s.replace(nav_marker,nav+nav_marker,1)
+          section='<section class="section alt" id="coursework"><div class="wrap"><div class="section-head reveal"><h2>Relevant Coursework</h2><p>Selected business, finance, accounting, analytics, economics, and quantitative coursework completed at Loyola University Chicago.</p></div><div class="card-grid"><div class="card reveal"><h3>Finance</h3><p class="desc"><strong>FINC 334</strong> — Principles of Corporate Finance · A / 100%<br><strong>FINC 335</strong> — Investments</p><a href="recommendation-wemhoff.html" class="btn btn-secondary">FINC 334 verification →</a></div><div class="card reveal"><h3>Accounting & Taxation</h3><p class="desc"><strong>ACCT 201</strong> — Introductory Accounting I<br><strong>ACCT 202</strong> — Introductory Accounting II<br><strong>ACCT 303</strong> — Intermediate Accounting I<br><strong>ACCT 328</strong> — Concepts in Taxation</p></div><div class="card reveal"><h3>Economics</h3><p class="desc"><strong>ECON 201</strong> — Principles of Microeconomics<br><strong>ECON 202</strong> — Principles of Macroeconomics<br><strong>ECON 303</strong> — Intermediate Microeconomics</p></div><div class="card reveal"><h3>Analytics & Information Systems</h3><p class="desc"><strong>INFS 247</strong> — Business Information Systems<br><strong>INFS 343</strong> — Business Analytics<br><strong>ISSCM 241</strong> — Business Statistics</p></div><div class="card reveal"><h3>Operations & Management</h3><p class="desc"><strong>SCMG 232</strong> — Introduction to Supply Chain Management<br><strong>MGMT 201</strong> — Managing People and Organizations</p></div><div class="card reveal"><h3>Business Foundations</h3><p class="desc"><strong>MARK 201</strong> — Principles of Marketing<br><strong>LREB 315</strong> — Law and the Regulatory Environment of Business I<br><strong>COMM 103</strong> — Business & Professional Speaking</p></div><div class="card reveal"><h3>Quantitative Foundations</h3><p class="desc"><strong>MATH 110</strong> — Business Precalculus<br><strong>MATH 130</strong> — Business Calculus</p></div><div class="card reveal"><h3>Professional Development</h3><p class="desc"><strong>QUIN 101</strong> — Business Learning and Careers<br><strong>QUIN 102</strong> — Financial Literacy and Well-Being<br><strong>QUIN 202</strong> — Career Preparation</p></div></div></div></section>'
+          marker='<section class="section" id="recommendations">'
           if 'id="coursework"' not in s:
-              marker='<section class="section" id="recommendations">'
               if marker not in s: raise SystemExit('recommendations marker not found')
-              s=s.replace(marker, section+'\n'+marker, 1)
+              s=s.replace(marker,section+'\n'+marker,1)
           p.write_text(s)
           PY
       - name: Commit coursework update
@@ -50,4 +32,3 @@ jobs:
           git add index.html
           git diff --cached --quiet || git commit -m "Add Loyola relevant coursework section"
           git push
-# retrigger 2026-09-17
